@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Controllers\StudentController;
+use App\Controllers\PageController;
 
 class Router
 {
@@ -27,19 +28,19 @@ class Router
         $pattern = str_replace(
             '{id}',
             '([0-9]+)',
-            $route['uri']
+            $router['uri']
 
         );
 
         $pattern ='#^' . $pattern . '$#';
 
         if (preg_match($pattern, $uri, $matches)) {
-             require_once './app/controllers/' . $route['controller'] . '.php';
+             require_once '../app/controllers/' . $router['controller'] . '.php';
              array_shift($matches);
-             $controllerClass = 'App\\Controllers\\' . $route['controller'];
+             $controllerClass = 'App\\Controllers\\' . $router['controller'];
              $controller = new $controllerClass();
 
-             $function = $route['function'];
+             $function = $router['function'];
              call_user_func_array([$controller, $function], $matches);
 
              return;
