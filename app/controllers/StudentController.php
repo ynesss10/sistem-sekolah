@@ -12,7 +12,7 @@ class StudentController
     public function create()
  
     {
-         require_once '../app/views/students/index.php';
+         require_once '../app/views/students/create.php';
  
     }
 }
