@@ -11,5 +11,6 @@ $router->add('GET', '/', 'PageController', 'home');
 $router->add('GET','/students', 'StudentController', 'Index');
 $router->add('GET','/students/create','StudentController','create');
 $router->add('GET','/students/{id}','StudentController','show');
+$router->add('GET','/students/{id}/edit','StudentController','edit');
 $router->run();
 ?>
