@@ -1,5 +1,5 @@
 <?php
-namespace App\Core
+namespace App\Core;
 require_once '../app/config/app.php';
 
 class Database {
