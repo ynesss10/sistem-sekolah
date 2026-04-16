@@ -18,10 +18,14 @@ class Router
             'function' => $function,
         ]; 
     }
-
     public function run()
     {
       $method = $_SERVER['REQUEST_METHOD'];
+
+    if($method === 'POST' && isset($_POST['_method'])) {
+        $method = $_POST['method'];
+    }
+
       $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
       foreach($this->routes as $router) {
@@ -34,6 +38,17 @@ class Router
 
         $pattern ='#^' . $pattern . '$#';
 
+        if ($method === $router['method'] && preg_match($pattern, $uri, $matches)) {
+             require_once '../app/controllers/' . $router['controller'] . '.php';
+             array_shift($matches);
+             $controllerClass = 'App\\Controllers\\' . $router['controller'];
+             $controller = new $controllerClass();
+
+             $function = $router['function'];
+             call_user_func_array([$controller, $function], $matches);
+
+             return;
+        }
         if (preg_match($pattern, $uri, $matches)) {
              require_once '../app/controllers/' . $router['controller'] . '.php';
              array_shift($matches);
